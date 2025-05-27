@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI 学术摘要检索</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      backdrop-filter: blur(4px);
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      width: 660px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .robot-icon {
+      font-size: 36px;
+    }
+
+    .search-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .search-area .field-select label {
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+
+    .search-box input[type="text"] {
+      padding: 12px;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      font-size: 16px;
+      width: 320px;
+      outline: none;
+    }
+
+    .search-box button {
+      background-color: #3b82f6;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      background-color: #2563eb;
+    }
+
+    .advanced {
+      margin-left: 12px;
+      font-size: 14px;
+      color: #a5c9ff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .tip {
+      color: #ccc;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <div class="robot-icon">🤖</div>
+      <div>AI 学术摘要检索</div>
+    </div>
+
+    <div class="search-area">
+      <div class="field-select">
+        <label><input type="radio" name="field" value="author" checked /> 作者</label>
+        <label><input type="radio" name="field" value="title" /> 论文标题</label>
+        <label><input type="radio" name="field" value="keyword" /> 关键词</label>
+      </div>
+
+      <div class="search-box">
+        <input type="text" placeholder="请输入检索关键词..." />
+        <button>搜索</button>
+      </div>
+
+     <a class="advanced" href="advanced.html">使用高级检索</a>
+
+    </div>
+
+    <div class="tip">请使用基本检索或高级检索进行 AI 论文摘要检索</div>
+  </div>
+</body>
+</html>

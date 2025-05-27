@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>高级检索 - AI 学术摘要</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 50px;
+      min-height: 100vh;
+      backdrop-filter: blur(4px);
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      width: 800px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    select, input[type="text"], input[type="date"] {
+      padding: 10px;
+      font-size: 14px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    select {
+      width: 130px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+    }
+
+    .delete-btn {
+      background: #f87171;
+      color: white;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background: #dc2626;
+    }
+
+    .add-btn, .submit-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .add-btn {
+      background-color: #22c55e;
+      color: white;
+      margin-right: 10px;
+    }
+
+    .add-btn:hover {
+      background-color: #16a34a;
+    }
+
+    .submit-btn {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .submit-btn:hover {
+      background-color: #2563eb;
+    }
+
+    .section-label {
+      margin: 30px 0 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #93c5fd;
+    }
+
+    .date-range {
+      display: none;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .category-select {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>高级检索</h2>
+
+    <form id="advanced-form">
+      <!-- 基本条件检索 -->
+      <div id="search-rows">
+        <div class="row">
+          <select name="logic">
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+          </select>
+          <select name="field">
+            <option value="title">论文标题</option>
+            <option value="author">作者</option>
+            <option value="keyword">关键词</option>
+          </select>
+          <input type="text" name="value" placeholder="请输入检索词...">
+          <button type="button" class="delete-btn" onclick="deleteRow(this)">🗑</button>
+        </div>
+      </div>
+
+      <button type="button" class="add-btn" onclick="addRow()">+ 添加条件</button>
+
+      <!-- 分类选择 -->
+      <div class="section-label">论文分类：</div>
+      <div class="category-select">
+        <select name="category">
+          <option value="">不过滤分类（默认）</option>
+          <option value="cs.AI">人工智能（cs.AI）</option>
+          <option value="cs.CL">计算与语言（cs.CL）</option>
+          <option value="cs.LG">机器学习（cs.LG）</option>
+          <option value="stat.ML">统计机器学习（stat.ML）</option>
+        </select>
+      </div>
+
+      <!-- 日期筛选 -->
+      <div class="section-label">
+        <label><input type="checkbox" id="date-filter-toggle" onchange="toggleDateRange()" /> 启用发表日期筛选</label>
+      </div>
+      <div class="date-range" id="date-range">
+        <input type="date" name="date_start" />
+        <span style="line-height: 36px;">至</span>
+        <input type="date" name="date_end" />
+      </div>
+
+      <!-- 提交 -->
+      <button type="submit" class="submit-btn">🔍 检索</button>
+    </form>
+  </div>
+
+  <script>
+    function deleteRow(button) {
+      const row = button.parentElement;
+      row.remove();
+    }
+
+    function addRow() {
+      const container = document.getElementById('search-rows');
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `
+        <select name="logic">
+          <option value="AND">AND</option>
+          <option value="OR">OR</option>
+        </select>
+        <select name="field">
+          <option value="title">论文标题</option>
+          <option value="author">作者</option>
+          <option value="keyword">关键词</option>
+        </select>
+        <input type="text" name="value" placeholder="请输入检索词...">
+        <button type="button" class="delete-btn" onclick="deleteRow(this)">🗑</button>
+      `;
+      container.appendChild(row);
+    }
+
+    function toggleDateRange() {
+      const dateSection = document.getElementById("date-range");
+      const toggle = document.getElementById("date-filter-toggle");
+      dateSection.style.display = toggle.checked ? "flex" : "none";
+    }
+
+    document.getElementById('advanced-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('点击了高级检索（前端演示版本）');
+    });
+  </script>
+</body>
+</html>
