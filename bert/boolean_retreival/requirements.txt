@@ -1,0 +1,6 @@
+streamlit==1.29.0
+pandas==2.1.2
+googletrans==4.0.0-rc1
+pymysql==1.1.0
+python-dotenv==1.0.0
+python-dateutil==2.8.2
