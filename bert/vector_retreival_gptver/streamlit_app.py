@@ -4,9 +4,48 @@ from deep_translator import GoogleTranslator
 from bert_engine.embedder import BertEmbedder
 from bert_engine.searcher import SemanticSearcher
 from bert_engine.database import MySQLDocumentDB
+import base64
 
-st.title("AI 向量检索系统")
+# 设置页面配置
+st.set_page_config(
+    page_title="AI 向量检索系统",
+    layout="centered",
+)
 
+# 加载背景图像
+def set_background(image_path: str):
+    with open(image_path, "rb") as f:
+        encoded = base64.b64encode(f.read()).decode()
+    css = f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/png;base64,{encoded}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: white;
+    }}
+    h1 {{
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px #000;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: rgba(0, 0, 0, 0);  /* 透明背景 */
+    }}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+
+set_background("Background.png")
+
+# 美化后的标题（无背景块）
+st.markdown(
+    "<h1 style='text-align: center;'>🤖 AI 向量检索系统</h1>", 
+    unsafe_allow_html=True
+)
+# 初始化 session_state
 if "all_documents" not in st.session_state:
     st.session_state.all_documents = []
 if "current_results" not in st.session_state:
@@ -18,6 +57,7 @@ if "embedder" not in st.session_state:
 if "elapsed_time" not in st.session_state:
     st.session_state.elapsed_time = 0.0
 
+# 检索设置
 query = st.text_input("请输入检索内容（中文将自动翻译为英文）")
 field = st.selectbox("选择计算相似度标准", ["title", "abstract", "authors", "category", "title+abstract"], index=4)
 sort_by = st.selectbox("排序方式", ["relevance", "date"])
@@ -33,8 +73,6 @@ if (search_triggered or refine_triggered) and query.strip():
     start_time = time.time()
     translated_query = GoogleTranslator(source='auto', target='en').translate(query)
     if search_triggered:
-
-#### 这边写一下自己sql workbench的密码
         db = MySQLDocumentDB(password='123456')
         st.session_state.all_documents = db.fetch_all_documents()
         source_docs = st.session_state.all_documents
@@ -60,6 +98,7 @@ if (search_triggered or refine_triggered) and query.strip():
     st.session_state.search_done = True
     st.session_state.elapsed_time = time.time() - start_time
 
+# 展示结果
 if st.session_state.search_done and st.session_state.current_results:
     total_results = len(st.session_state.current_results)
     total_pages = (total_results + page_size - 1) // page_size
@@ -73,7 +112,6 @@ if st.session_state.search_done and st.session_state.current_results:
         end_idx = start_idx + page_size
         page_results = st.session_state.current_results[start_idx:end_idx]
 
-#### 这边写一下自己sql workbench的密码
         db = MySQLDocumentDB(password='123456')
         for doc in page_results:
             score = st.session_state.filtered_result_scores.get(doc["id"], 0)
@@ -83,8 +121,6 @@ if st.session_state.search_done and st.session_state.current_results:
             st.markdown(f"🧠 相似度: {score:.2f}")
             with st.expander("📖 查看摘要全文"):
                 st.markdown(f"{doc['abstract']}")
-                
-            ## gpt summary 
             with st.expander("📘 GPT摘要查看"):
                 try:
                     summary = db.fetch_summary_by_id(doc["id"])
