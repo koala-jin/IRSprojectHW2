@@ -3,14 +3,15 @@ import re
 import os
 from datetime import datetime
 from difflib import get_close_matches
-from googletrans import Translator
+## from googletrans import Translator
+from deep_translator import GoogleTranslator
 from dotenv import load_dotenv
 from typing import List, Dict, Tuple, Optional
 
 load_dotenv()
 
-translator = Translator(service_urls=['translate.google.cn'])
-
+## translator = Translator(service_urls=['translate.google.cn'])
+translator = GoogleTranslator(source = 'zh-CN', target = 'en')
 # ================== 完整分类映射系统 ==================
 CATEGORY_TAXONOMY = {
     # 人工智能（父类）
@@ -136,7 +137,8 @@ def expand_synonyms(keyword: str) -> List[str]:
 def safe_translate(text: str) -> str:
     """带异常处理的翻译"""
     try:
-        return translator.translate(text, src='zh-cn', dest='en').text
+##        return translator.translate(text, src='zh-cn', dest='en').text
+        return translator.translate(text)
     except:
         return text
 
