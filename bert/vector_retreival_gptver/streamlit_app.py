@@ -62,7 +62,7 @@ query = st.text_input("请输入检索内容（中文将自动翻译为英文）
 field = st.selectbox("选择计算相似度标准", ["title", "abstract", "authors", "category", "title+abstract"], index=4)
 sort_by = st.selectbox("排序方式", ["relevance", "date"])
 page_size = st.selectbox("每页展示结果数量", [5, 10, 20, 50])
-similarity_threshold = st.slider("相关性下限值（相似度）", 0.2, 0.4, 0.25, step=0.01)
+similarity_threshold = st.slider("相关性下限值（相似度）", -0.5, 0.4, 0.25, step=0.01)
 current_page = st.number_input("页码", min_value=1, value=1, step=1)
 
 col1, col2 = st.columns([1, 1])
