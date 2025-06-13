@@ -193,7 +193,7 @@ if 'base_results' in st.session_state:
                 end_date=end_date.strftime("%Y-%m-%d")
             )
             st.session_state.filtered_results = filtered
-            st.experimental_rerun()
+            st.rerun()
 
     # 显示结果
     st.subheader(f"当前结果（{len(st.session_state.filtered_results)} 篇）")

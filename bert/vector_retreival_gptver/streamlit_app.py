@@ -70,8 +70,11 @@ search_triggered = col1.button("开始检索")
 refine_triggered = col2.button("在结果中检索")
 
 if (search_triggered or refine_triggered) and query.strip():
+    #计时器
     start_time = time.time()
+    #翻译：中文-->英文
     translated_query = GoogleTranslator(source='auto', target='en').translate(query)
+    #进入数据库进行匹配
     if search_triggered:
         db = MySQLDocumentDB(password='123456')
         st.session_state.all_documents = db.fetch_all_documents()
